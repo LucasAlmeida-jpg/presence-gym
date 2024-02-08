@@ -30,13 +30,10 @@
             </div>
         </article>
 
-        <footer class="row px-5 py-3 d-flex align-items-center justify-content-between">
-            <div class="col-md-6">
-                <div>
-                   <button class="btn">Histórico</button class="btn">  
-                </div>
+        <footer class="row px-5 py-3">
+            <div class="col-md-12 text-center">
+                   <button class="btn">Histórico</button> 
             </div>
-            <div class="col-md-6"></div>
         </footer>
     </section>
 </template>
