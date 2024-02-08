@@ -91,3 +91,41 @@ button {
   border: none !important;
   color: white !important;
 }
+
+nav {
+  background-color: #242424;
+
+}
+
+.article h3 {
+  background-color: #242424;
+  width: auto !important;
+  padding: 10px 15px;
+  border-radius: 12px;
+}
+
+.article .card {
+  background-color: #242424;
+  width: auto !important;
+  padding: 10px 15px;
+  border-radius: 12px;
+  display: flex;
+  justify-content: center;
+  align-items: center;  
+}
+
+.card h3 {
+  background-color: #181818;
+  padding: 5px 10px;
+  border-radius: 5px !important;
+}
+
+footer {
+  bottom: 0;
+  position: absolute !important;
+  margin: 0 !important;
+  background-color: #242424;
+  display: flex;
+  align-items: center;
+  min-width: 100% !important;
+}
