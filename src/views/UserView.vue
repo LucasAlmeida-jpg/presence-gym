@@ -4,6 +4,7 @@
             <div>
                 <h5>Nome: Lucas</h5>
                 <h5>Faixa: Preta</h5>
+                <h5>Turno: Matutino</h5>
             </div>
             <div>
                 <button class="btn">Sair</button>
@@ -30,7 +31,8 @@
 
         <footer class="row px-5 py-3">
             <div class="col-md-12 text-center">
-                <button class="btn">Histórico</button>
+                <button class="btn">Histórico <span><img class="time" src="../assets/history.svg" alt=""></span></button>
+                
             </div>
         </footer>
     </section>

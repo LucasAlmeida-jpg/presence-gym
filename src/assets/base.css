@@ -128,3 +128,7 @@ footer {
   align-items: center;
   min-width: 100% !important;
 }
+
+.time {
+  width: 25px;
+}
