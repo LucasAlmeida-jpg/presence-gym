@@ -1,13 +1,29 @@
 <template>
     <section class="container-0">
         <nav class="px-5 py-3 d-flex align-items-center justify-content-between">
-            <div>
-                <h5>Nome: Lucas</h5>
+            <div class="d-flex align-items-center justify-content-between">
+
+                <div class="people" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasWithBothOptions">
+                    <img src="../assets/menu.svg" alt="">
+                </div>
+                <!-- <div>
+                    <h5>Nome: Lucas</h5>
                 <h5>Faixa: Preta</h5>
                 <h5>Turno: Matutino</h5>
+                </div> -->
             </div>
             <div>
                 <button class="btn">Sair</button>
+            </div>
+            <div class="offcanvas offcanvas-start" data-bs-scroll="true" tabindex="-1" id="offcanvasWithBothOptions"
+                aria-labelledby="offcanvasWithBothOptionsLabel">
+                <div class="offcanvas-header">
+                    <h5 class="offcanvas-title" id="offcanvasWithBothOptionsLabel">Backdrop with scrolling</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                </div>
+                <div class="offcanvas-body">
+                    <p>Try scrolling the rest of the page to see this option in action.</p>
+                </div>
             </div>
         </nav>
         <article class="row article py-3  mt-3 justify-content-center d-flex">
@@ -32,7 +48,7 @@
         <footer class="row px-5 py-3">
             <div class="col-md-12 text-center">
                 <button class="btn">Histórico <span><img class="time" src="../assets/history.svg" alt=""></span></button>
-                
+
             </div>
         </footer>
     </section>

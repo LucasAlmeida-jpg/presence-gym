@@ -1,12 +1,13 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap/dist/js/bootstrap.min.js';
 import './assets/main.css';
 import { createApp } from 'vue';
 import { createPinia } from 'pinia';
-import App from './App.vue'; // Se você tiver um arquivo App.vue
-import HomeView from './views/HomeView.vue'; // Certifique-se de ajustar o caminho corretamente
+import App from './App.vue'; 
+import HomeView from './views/HomeView.vue'; 
 import router from './router';
 
-const app = createApp(App || HomeView); // Use App ou HomeView dependendo da sua estrutura
+const app = createApp(App || HomeView); 
 
 app.use(createPinia());
 app.use(router);
