@@ -1,16 +1,16 @@
 <template>
   <main class="login-container">
-    <div v-if="!isLoggedIn" class="login-form">
-      <h2>Login</h2>
-      <div class="d-flex justify-content-center mb-3">
-        <button @click="setMode('user')" :class="{ active: loginMode === 'user' }">Email</button>
-        <button @click="setMode('professor')" :class="{ active: loginMode === 'professor' }" class="ms-3">Professor</button>
-      </div>
-      <form @submit.prevent="login">
+    <div class="login-form">
+      <h2>Cadastro</h2>
+      <form @submit.prevent="cadastro">
+        <div class="form-floating mb-3">
+          <input type="text" v-model="username" class="form-control" id="floatingUsername" placeholder=" ">
+          <label for="floatingUsername">Nome</label>
+        </div>
+
         <div class="form-floating mb-3">
           <input type="text" v-model="email" class="form-control" id="floatingUsername" placeholder=" ">
-          <label for="floatingUsername" v-if="loginMode === 'user'">Email</label>
-          <label for="floatingUsername" v-else-if="loginMode === 'professor'">Professor</label>
+          <label for="floatingUsername">Email</label>
         </div>
 
         <div class="form-floating mb-3">
@@ -18,7 +18,7 @@
           <label for="floatingPassword">Senha</label>
         </div>
 
-        <button type="submit">Entrar</button>
+        <button type="submit">Cadastrar</button>
       </form>
     </div>
   </main>
@@ -30,43 +30,31 @@ import axios from "axios";
 export default {
   data() {
     return {
-      email: '',
+      username: '',
       password: '',
-      isLoggedIn: false,
-      loginMode: 'user',
-    };
+      email: '',
+     };
   },
   methods: {
-    login() {
+    cadastro(){
       var data = {
         email: this.email,
-        password: this.password
-      };
+        password: this.password,
+        name: this.username,
+      }
 
-      axios.post('http://127.0.0.1:8000/api/auth/login', data)
+      axios.post('http://127.0.0.1:8000/api/users', data)
       .then(response => {
-        if (response.status === 200) {
-          this.$router.push('/User');
+        if (response.status === 201) {
+            this.$router.push('/');
         } else {
           console.log(response.error);
         }
       })
-    },
-    logout() {
-      this.isLoggedIn = false;
-      this.username = '';
-      this.password = '';
-    },
-    setMode(mode) {
-      this.loginMode = mode;
-      // Limpar campos de formulário ao mudar o modo
-      this.username = '';
-      this.password = '';
-    },
+    }
   },
 };
 </script>
-
 
 
 <style scoped>

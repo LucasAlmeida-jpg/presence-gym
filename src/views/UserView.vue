@@ -6,7 +6,7 @@
                 <h5>Faixa: Preta</h5>
             </div>
             <div>
-                <button class="btn">Sair</button>
+                <button class="btn" @click="logOut()">Sair</button>
             </div>
         </nav>
         <article class="row article py-3  mt-3 justify-content-center d-flex">
@@ -35,3 +35,30 @@
         </footer>
     </section>
 </template>
+<script>
+import axios from "axios";
+
+export default {
+  data() {
+    return {
+      email: '',
+      password: '',
+      isLoggedIn: false,
+      loginMode: 'user',
+    };
+  },
+  methods: {
+    logOut() {
+      axios.post('http://127.0.0.1:8000/api/auth/logout')
+      .then(response => {
+        if (response.status === 200) {
+          this.$router.push('/');
+        } else {
+          console.log(response.error);
+        }
+      })
+    },
+  },
+};
+</script>
+
