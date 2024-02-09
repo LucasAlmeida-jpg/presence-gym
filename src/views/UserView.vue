@@ -1,15 +1,15 @@
 <template>
     <section class="container-0">
-        <nav class="row px-5 py-3 d-flex align-items-center justify-content-between">
-            <div class="col-md-6">
+        <nav class="px-5 py-3 d-flex align-items-center justify-content-between">
+            <div>
                 <h5>Nome: Lucas</h5>
                 <h5>Faixa: Preta</h5>
             </div>
-            <div class="col-md-6">
+            <div>
                 <button class="btn">Sair</button>
             </div>
         </nav>
-        <article class="row article px-5 py-3 text-center mt-3 justify-content-center d-flex">
+        <article class="row article py-3  mt-3 justify-content-center d-flex">
             <h3 class="text-center">Área de Presença do Aluno</h3>
         </article>
 
