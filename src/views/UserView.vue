@@ -26,21 +26,29 @@
                 </div>
             </div>
         </nav>
-        <article class="row article py-3  mt-3 justify-content-center d-flex">
-            <h3 class="text-center">Área de Presença do Aluno</h3>
-        </article>
+       
+       <div class="container" style="margin-top:80px;">
+            <div class="row d-flex justify-content-center">
+                <div class="col-md-6 col-sm-12">
+                    <div class="btn btn-success py-3 w-100">
+                        <button class="text-center" @click="requestPresence()">Marcar Presença</button>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-        <article class="row article px-5 py-3 text-center mt-3">
+
+        <article class="row article px-5 py-3 text-center" style="margin-top:100px;">
             <div class="col-md-6 mb-3">
-                <div class="card">
-                    <h3>Presença</h3>
+                <div>
+                    <h3>Presença </h3>
                     <h4>5</h4>
                 </div>
             </div>
             <div class="col-md-6">
-                <div class="card">
+                <div>
                     <h3>Faltas</h3>
-                    <h4>2</h4>
+                    <h4>{{ data.countFouls }}</h4>
                 </div>
             </div>
         </article>
@@ -48,7 +56,6 @@
         <footer class="row px-5 py-3">
             <div class="col-md-12 text-center">
                 <button class="btn">Histórico <span><img class="time" src="../assets/history.svg" alt=""></span></button>
-
             </div>
         </footer>
     </section>
@@ -59,23 +66,59 @@ import axios from "axios";
 export default {
   data() {
     return {
-      email: '',
-      password: '',
-      isLoggedIn: false,
-      loginMode: 'user',
+        TOKEN: localStorage.getItem("token"),
+        data:[],
+        email: '',
+        password: '',
+        isLoggedIn: false,
+        loginMode: 'user',
     };
   },
+
+  mounted(){
+    this.getPresences();
+  },
+
   methods: {
     logOut() {
-      axios.post('http://127.0.0.1:8000/api/auth/logout')
+      axios.get('/api/auth/logout', {
+        headers: { Authorization: "Bearer " + this.TOKEN },
+      })
       .then(response => {
         if (response.status === 200) {
           this.$router.push('/');
         } else {
           console.log(response.error);
         }
-      })
+      });
     },
+
+    requestPresence(){
+        axios.get('/api/presence-request', {
+            headers: { Authorization: "Bearer " + this.TOKEN },
+        })
+        .then(response => {
+            if (response.status === 200) {
+            // this.$router.push('/');
+            } else {
+            console.log(response.error);
+            }
+        });
+    },
+
+    getPresences(){
+        axios.get('/api/presences', {
+            headers: { Authorization: "Bearer " + this.TOKEN },
+        })
+        .then(response => {
+            if (response.status === 200) {
+                this.data = response.data;
+                console.log(this.data.countPresence, 'presences')
+            } else {
+            console.log(response.error);
+            }
+        });
+    }
   },
 };
 </script>

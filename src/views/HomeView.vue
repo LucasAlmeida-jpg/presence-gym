@@ -43,9 +43,10 @@ export default {
         password: this.password
       };
 
-      axios.post('http://127.0.0.1:8000/api/auth/login', data)
+      axios.post('/api/auth/login', data)
       .then(response => {
         if (response.status === 200) {
+          localStorage.setItem("token", response.data.access_token);
           this.$router.push('/User');
         } else {
           console.log(response.error);
