@@ -1,20 +1,9 @@
 <template>
     <section class="container-0">
-        <nav class="px-5 py-3 d-flex align-items-center justify-content-between">
-            <div class="d-flex align-items-center justify-content-between">
-
-                <div class="people" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasWithBothOptions">
-                    <img src="../assets/menu.svg" alt="">
-                </div>
-                <!-- <div>
-                    <h5>Nome: Lucas</h5>
-                <h5>Faixa: Preta</h5>
-                <h5>Turno: Matutino</h5>
-                </div> -->
-            </div>
-            <div>
-                <button class="btn" @click="logOut()">Sair</button>
-            </div>
+        <nav class="px-3 py-2 d-flex align-items-center justify-content-between">
+            
+            <UserBar />
+            
             <div class="offcanvas offcanvas-start" data-bs-scroll="true" tabindex="-1" id="offcanvasWithBothOptions"
                 aria-labelledby="offcanvasWithBothOptionsLabel">
                 <div class="offcanvas-header">
@@ -26,8 +15,8 @@
                 </div>
             </div>
         </nav>  
-       
-       <div class="container" style="margin-top:80px;" v-if="data?.pending == 0">
+
+       <div class="container" style="margin-top:80px;" v-if="data?.pending?.length == 0">
             <div class="row d-flex justify-content-center">
                 <div class="col-md-6 col-sm-12">
                     <div class="btn btn-success py-3 w-100">
@@ -47,7 +36,7 @@
             </div>
         </div>
 
-        <div class="container" style="margin-top:80px;" v-if="data?.refused?.status == 'refused'">
+        <!-- <div class="container" style="margin-top:80px;" v-if="data?.refused?.status == 'refused'">
             <div class="row d-flex justify-content-center">
                 <div class="col-md-6 col-sm-12">
                     <div class="btn btn-danger py-3 w-100">
@@ -55,7 +44,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> -->
 
         <article class="row article px-5 py-3 text-center" style="margin-top:100px;">
             <div class="col-md-6 mb-3">
@@ -72,32 +61,41 @@
             </div>
         </article>
 
-        <footer class="row px-5 py-3">
-            <div class="col-md-12 text-center">
-                <button class="btn">Histórico <span><img class="time" src="../assets/history.svg" alt=""></span></button>
-            </div>
-        </footer>
+        <Footer />
+        
     </section>
 </template>
 <script>
+
 import axios from "axios";
+import UserBar from '../components/userBar.vue'
+import Footer from '../components/Footer.vue'
 
 export default {
-  data() {
-    return {
-        TOKEN: localStorage.getItem("token"),
-        data:[],
-        pending: [],
-        refused: [],
-        email: '',
-        password: '',
-        isLoggedIn: false,
-        loginMode: 'user',
-    };
-  },
+    components:{
+        UserBar,
+        Footer
+    },
+
+    data() {
+        return {
+            TOKEN: localStorage.getItem("token"),
+            me: {},
+            data:[],
+            pending: [],
+            refused: [],
+            email: '',
+            password: '',
+            isLoggedIn: false,
+            loginMode: 'user',
+        };
+    },
 
   mounted(){
     this.getPresences();
+    const userJson = localStorage.getItem('me');
+    let user = JSON.parse(userJson);
+    this.me = user;
   },
 
   methods: {
@@ -122,7 +120,7 @@ export default {
             if (response.status === 201) {
                 this.data.pending = response.data;
             } else {
-            console.log(response.error);
+                alert('Voce já marcou sua presenca na data de hoje.')
             }
         });
     },
@@ -144,4 +142,5 @@ export default {
   },
 };
 </script>
+
 

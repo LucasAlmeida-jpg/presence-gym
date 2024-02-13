@@ -1,19 +1,6 @@
 <template>
     <nav class="px-5 py-3 d-flex align-items-center justify-content-between">
-        <div class="d-flex align-items-center justify-content-between">
-
-            <div class="people" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasWithBothOptions">
-                <img src="../assets/menu.svg" alt="">
-            </div>
-            <!-- <div>
-                <h5>Nome: Lucas</h5>
-            <h5>Faixa: Preta</h5>
-            <h5>Turno: Matutino</h5>
-            </div> -->
-        </div>
-        <div>
-            <button class="btn" @click="logOut()">Sair</button>
-        </div>
+        <UserBar />
         <div class="offcanvas offcanvas-start" data-bs-scroll="true" tabindex="-1" id="offcanvasWithBothOptions"
             aria-labelledby="offcanvasWithBothOptionsLabel">
             <div class="offcanvas-header">
@@ -52,17 +39,18 @@
         </table>
     </div>
 
-    <footer class="row px-5 py-3 position-fixed">
-        <div class="col-md-12 text-center">
-            <button class="btn">Histórico <span><img class="time" src="../assets/history.svg" alt=""></span></button>
-        </div>
-    </footer>
+    <Footer />
 </template>
 <script>
 import axios from "axios";
 import moment from 'moment';
+import UserBar from '../components/userBar.vue';
+import Footer from '../components/Footer.vue';
 
-    export default {
+export default {
+    components:{
+        UserBar, Footer
+    },
     data() {
         return {
             TOKEN: localStorage.getItem("token"),
@@ -125,12 +113,13 @@ import moment from 'moment';
         }
 
     },
-    };
+};
 </script>
 
 <script setup>
     import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-</script><style scoped>
+</script>
+<style scoped>
     .card-historic{
         height: auto;
         border-radius: 10px;
