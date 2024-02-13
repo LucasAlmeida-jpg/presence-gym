@@ -1,4 +1,7 @@
 <template>
+  <div class="d-flex justify-content-center">
+    <img src="/images/almeida_mini.png" alt="">
+  </div>
   <main class="login-container">
     <div class="login-form">
       <h2>Cadastro</h2>
@@ -62,7 +65,7 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
+  height: 50vh;
 }
 
 .login-form {
