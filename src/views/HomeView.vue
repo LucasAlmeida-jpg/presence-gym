@@ -1,11 +1,14 @@
 <template>
+  <div class="d-flex justify-content-center">
+    <img src="/images/almeida_mini.png" alt="">
+  </div>
   <main class="login-container">
     <div v-if="!isLoggedIn" class="login-form">
       <h2>Login</h2>
-      <div class="d-flex justify-content-center mb-3">
+      <!-- <div class="d-flex justify-content-center mb-3">
         <button @click="setMode('user')" :class="{ active: loginMode === 'user' }">Email</button>
         <button @click="setMode('professor')" :class="{ active: loginMode === 'professor' }" class="ms-3">Professor</button>
-      </div>
+      </div> -->
       <form @submit.prevent="login">
         <div class="form-floating mb-3">
           <input type="text" v-model="email" class="form-control" id="floatingUsername" placeholder=" ">
@@ -46,23 +49,21 @@ export default {
       axios.post('/api/auth/login', data)
       .then(response => {
         if (response.status === 200) {
+          const userJson = JSON.stringify(response.data.user);
+
           localStorage.setItem("token", response.data.access_token);
-          this.$router.push('/User');
+          localStorage.setItem("role", response.data.user.role);
+          localStorage.setItem("me", userJson);
+
+          if(response.data.user.role == 'student'){
+            this.$router.push('/User');
+          }else{
+            this.$router.push('/Professor');
+          }
         } else {
           console.log(response.error);
         }
       })
-    },
-    logout() {
-      this.isLoggedIn = false;
-      this.username = '';
-      this.password = '';
-    },
-    setMode(mode) {
-      this.loginMode = mode;
-      // Limpar campos de formulário ao mudar o modo
-      this.username = '';
-      this.password = '';
     },
   },
 };
@@ -75,7 +76,7 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
+  height: 50vh;
 }
 
 .login-form {
