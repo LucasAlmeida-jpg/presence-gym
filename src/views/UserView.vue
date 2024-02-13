@@ -25,24 +25,43 @@
                     <p>Try scrolling the rest of the page to see this option in action.</p>
                 </div>
             </div>
-        </nav>
+        </nav>  
        
-       <div class="container" style="margin-top:80px;">
+       <div class="container" style="margin-top:80px;" v-if="data?.pending == 0">
             <div class="row d-flex justify-content-center">
                 <div class="col-md-6 col-sm-12">
                     <div class="btn btn-success py-3 w-100">
-                        <button class="text-center" @click="requestPresence()">Marcar Presença</button>
+                        <div class="text-center" @click="requestPresence()">Marcar Presença</div>
                     </div>
                 </div>
             </div>
         </div>
 
+        <div class="container" style="margin-top:80px;" v-if="data?.pending?.status == 'pending'">
+            <div class="row d-flex justify-content-center">
+                <div class="col-md-6 col-sm-12">
+                    <div class="btn btn-warning py-3 w-100">
+                        <div class="text-center">Aguardando Confirmação</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="container" style="margin-top:80px;" v-if="data?.refused?.status == 'refused'">
+            <div class="row d-flex justify-content-center">
+                <div class="col-md-6 col-sm-12">
+                    <div class="btn btn-danger py-3 w-100">
+                        <div class="text-center">Recusado</div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
         <article class="row article px-5 py-3 text-center" style="margin-top:100px;">
             <div class="col-md-6 mb-3">
                 <div>
                     <h3>Presença </h3>
-                    <h4>5</h4>
+                    <h4>{{data.countPresence}}</h4>
                 </div>
             </div>
             <div class="col-md-6">
@@ -68,6 +87,8 @@ export default {
     return {
         TOKEN: localStorage.getItem("token"),
         data:[],
+        pending: [],
+        refused: [],
         email: '',
         password: '',
         isLoggedIn: false,
@@ -98,8 +119,8 @@ export default {
             headers: { Authorization: "Bearer " + this.TOKEN },
         })
         .then(response => {
-            if (response.status === 200) {
-            // this.$router.push('/');
+            if (response.status === 201) {
+                this.data.pending = response.data;
             } else {
             console.log(response.error);
             }
@@ -107,13 +128,14 @@ export default {
     },
 
     getPresences(){
-        axios.get('/api/presences', {
+        axios.get('/api/data-user', {
             headers: { Authorization: "Bearer " + this.TOKEN },
         })
         .then(response => {
             if (response.status === 200) {
                 this.data = response.data;
-                console.log(this.data.countPresence, 'presences')
+                this.pending = response.data.pending;
+                this.refused = response.data.refused;
             } else {
             console.log(response.error);
             }
