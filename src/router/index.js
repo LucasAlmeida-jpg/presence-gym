@@ -3,6 +3,7 @@ import HomeView from '../views/HomeView.vue'
 import ProfessorView from '../views/ProfessorView.vue'
 import UserView from '../views/UserView.vue'
 import CadastroView from '../views/CadastroView.vue'
+import HistoricoView from '../views/HistoricoView.vue'; 
 
 
 const router = createRouter({
@@ -27,6 +28,11 @@ const router = createRouter({
       path: '/cadastro',
       name: 'cadastro',
       component: CadastroView
+    },
+    {
+      path: '/Historico',
+      name: 'Historico',
+      component: HistoricoView
     },
    ]
 })
