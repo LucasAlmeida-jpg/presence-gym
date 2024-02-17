@@ -68,7 +68,7 @@
 <script>
 
 import axios from "axios";
-import UserBar from '../components/userBar.vue'
+import UserBar from '../components/UserBar.vue'
 import Footer from '../components/Footer.vue'
 
 export default {

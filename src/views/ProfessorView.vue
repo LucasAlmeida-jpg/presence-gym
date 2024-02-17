@@ -15,41 +15,23 @@
     <div class="d-flex justify-content-center mt-5">
         <h1>{{ presences.length }} Pedidos Pendentes</h1>
     </div>
-    <div class="mx-4 card-historic" style="margin-top:20px;">
-        <table class="table table-dark table-hover table-rounded">
-            <thead>
-                <tr>
-                <th scope="col">Nome</th>
-                <th scope="col">Data</th>
-                <th scope="col">Ação</th>
-                <th scope="col"></th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr v-for="(presence, index) in presences" :key="index">
-                    <th scope="row">{{presence?.user?.name}}</th>
-                    <td>{{ formatDate(presence?.created_at) }}</td>
-                    <td>
-                        <FontAwesomeIcon icon="circle-check"  class="me-3" @click="confirm(presence.id)"/>
-                        <FontAwesomeIcon icon="circle-xmark" @click="refuse(presence.id)"/>
-                    </td>
-                    <td></td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
+    
+    <Lista :presences="presences" /> 
 
     <Footer />
 </template>
 <script>
+
 import axios from "axios";
 import moment from 'moment';
-import UserBar from '../components/userBar.vue';
+import UserBar from '../components/UserBar.vue';
 import Footer from '../components/Footer.vue';
+import Lista from '../components/Lista.vue'
+
 
 export default {
     components:{
-        UserBar, Footer
+        UserBar, Footer, Lista
     },
     data() {
         return {
