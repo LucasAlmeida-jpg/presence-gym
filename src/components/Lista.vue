@@ -1,5 +1,5 @@
 <template>
-    <div class="row mx-3">
+    <div class="row mx-3" v-if="!show && !me.role == 'student'">
         <div class="">
             <input type="text" placeholder="Nome do aluno" class="col-12 filters" v-model="name">
         </div>
@@ -36,19 +36,30 @@
         <table class="table table-dark table-hover table-rounded">
             <thead>
                 <tr>
-                <th scope="col">Nome</th>
+                <th scope="col" v-if="me.role == 'student'">Status</th>
+                <th scope="col" v-else>Nome</th>
+
                 <th scope="col">Data</th>
-                <th scope="col">Ação</th>
+                <th scope="col" v-if="show">Ação</th>
                 <th scope="col"></th>
                 </tr>
             </thead>
             <tbody>
                 <tr v-for="(presence, index) in presences" :key="index">
-                    <th scope="row">{{presence?.user?.name}}</th>
+                    <th scope="row" v-if="me.role == 'student'">
+                        <div v-if="presence?.status == 'confirmed'">
+                            <FontAwesomeIcon icon="circle-check"  class="ms-1 me-2 text-success"/>
+                        </div>
+                        <div v-else>
+                            <FontAwesomeIcon icon="circle-xmark"  class="ms-1 me-2 text-danger"/>
+                        </div>
+                    </th>
+                    <th scope="row" v-else>{{presence?.user?.name}} <span style="font-size:8px; color:grey">({{ presence?.user?.belt }})</span></th>
+
                     <td>{{ formatDate(presence?.created_at) }}</td>
-                    <td>
-                        <FontAwesomeIcon icon="circle-check"  class="me-3" @click="confirm(presence.id)"/>
-                        <FontAwesomeIcon icon="circle-xmark" @click="refuse(presence.id)"/>
+                    <td v-if="show">
+                        <FontAwesomeIcon icon="circle-check"  class="me-2 text-success" @click="confirm(presence.id)"/>
+                        <FontAwesomeIcon icon="circle-xmark" class="text-danger" @click="refuse(presence.id)"/>
                     </td>
                     <td></td>
                 </tr>
@@ -59,10 +70,9 @@
 <script>
 import moment from 'moment';
 import axios from "axios";
+import { getUser } from "../helper.js";
 
 export default {
-    props: ['presences'],
-    
     data() {
         return {
             TOKEN: localStorage.getItem("token"),
@@ -70,11 +80,23 @@ export default {
             month: 'all',
             year:'2024',
             name:'',
-            presences: []
+            presences: [],
+            show: true
         };
     },
     mounted(){
-        this.getPresences();
+        this.me = getUser();
+        const path = window.location.pathname;
+        const fileName = path.split('/').pop();
+        
+        if(this.me.role == 'teacher'){
+            this.getPresences();
+        }
+
+        if(fileName == 'Historico'){
+            this.submit();
+            this.show = false;
+        }
     },
 
     methods: {
@@ -84,6 +106,7 @@ export default {
             })
             .then(response => {
                 if (response.status === 200) {
+                    console.log(response, 'response')
                     this.presences = response.data;
                 } else {
                 console.log(response.error);
@@ -92,21 +115,21 @@ export default {
         },
 
         getPresences(){
-        axios.get('/api/pending', {
-            headers: { Authorization: "Bearer " + this.TOKEN },
-        })
-        .then(response => {
-            if (response.status === 200) {
-                this.presences = response.data;
-                console.log(this.presences)
-            } else {
-            console.log(response.error);
-            }
-        });
-    },
+            axios.get('/api/pending', {
+                headers: { Authorization: "Bearer " + this.TOKEN },
+            })
+            .then(response => {
+                if (response.status === 200) {
+                    this.presences = response.data;
+                    console.log(this.presences)
+                } else {
+                console.log(response.error);
+                }
+            });
+        },
 
         formatDate(date){
-            return moment(date).format('DD/MM/YYYY');
+            return moment(date).format('DD/MM');
         },
     },
 };

@@ -3,18 +3,21 @@
         <UserBar />
     </nav>  
 
-    <div class="row mt-3">
+    <div class="mt-3">
         <h5 class="ms-4">Histórico</h5>
         <Lista />
   </div>
+
+    <Footer />
 </template>
 <script>
 import UserBar from '../components/UserBar.vue'
 import Lista from '../components/Lista.vue'
+import Footer from '../components/Footer.vue'
 
 export default {
     components:{
-        UserBar, Lista
+        UserBar, Lista, Footer
     },
   data() {
     return {
