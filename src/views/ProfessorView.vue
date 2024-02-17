@@ -37,36 +37,6 @@ export default {
         this.me = user;
     },
     methods: {
-        confirm(id){
-            axios.get('/api/confirm/'+id, {
-                headers: { Authorization: "Bearer " + this.TOKEN },
-            })
-            .then(response => {
-                if (response.status === 200) {
-                    alert('Presença confirmada com sucesso!')
-                    var presence = response.data;
-                    this.presences.splice(presence, 1);
-                } else {
-                console.log(response.error);
-                }
-            });
-        },
-
-        refuse(id){
-            axios.get('/api/refuse/'+ id, {
-                headers: { Authorization: "Bearer " + this.TOKEN },
-            })
-            .then(response => {
-                if (response.status === 200) {
-                    alert('Presença recusada com sucesso!')
-                    var presence = response.data;
-                    this.presences.splice(presence, 1);
-                } else {
-                console.log(response.error);
-                }
-            });
-        },
-
         getPresences(){
             axios.get('/api/pending', {
                 headers: { Authorization: "Bearer " + this.TOKEN },

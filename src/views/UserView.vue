@@ -99,19 +99,6 @@ export default {
   },
 
   methods: {
-    logOut() {
-      axios.get('/api/auth/logout', {
-        headers: { Authorization: "Bearer " + this.TOKEN },
-      })
-      .then(response => {
-        if (response.status === 200) {
-          this.$router.push('/');
-        } else {
-          console.log(response.error);
-        }
-      });
-    },
-
     requestPresence(){
         axios.get('/api/presence-request', {
             headers: { Authorization: "Bearer " + this.TOKEN },
