@@ -12,6 +12,11 @@
         </div>
 
         <div class="form-floating mb-3">
+          <input type="text" v-model="belt" class="form-control" id="floatingUsername" placeholder=" ">
+          <label for="floatingUsername">Faixa</label>
+        </div>
+
+        <div class="form-floating mb-3">
           <input type="text" v-model="email" class="form-control" id="floatingUsername" placeholder=" ">
           <label for="floatingUsername">Email</label>
         </div>
@@ -40,7 +45,7 @@ export default {
       email: '',
      };
   },
-  
+
   mounted(){
     logged();
   },

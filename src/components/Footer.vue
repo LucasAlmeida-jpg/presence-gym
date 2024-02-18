@@ -9,7 +9,8 @@
             <router-link to="/Historico" class="link">Histórico <span class="ps-1"><FontAwesomeIcon icon="clock" /></span></router-link>
         </div>
         <div class="">
-            <router-link to="/Graduacao" class="link">Graduação <span class="ps-1"><FontAwesomeIcon icon="up-long" /></span></router-link>
+            <router-link  v-if="me.role == 'student'" to="/Graduacao" class="link">Graduação <span class="ps-1"><FontAwesomeIcon icon="up-long" /></span></router-link>
+            <router-link v-else to="/Alunos" class="link">Alunos <span class="ps-1"><FontAwesomeIcon icon="users" /></span></router-link>
         </div>
         <div class="">
             <a class="link" @click="logOut()">Sair <span class="ps-1"><FontAwesomeIcon icon="arrow-right-from-bracket" /></span></a>
@@ -40,11 +41,13 @@ export default {
       })
       .then(response => {
         if (response.status === 200) {
-          this.$router.push('/');
         } else {
           console.log(response.error);
         }
       });
+
+      localStorage.clear();
+      this.$router.push('/');
     },
   }
 };
