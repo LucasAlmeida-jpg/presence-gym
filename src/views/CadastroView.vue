@@ -46,7 +46,7 @@ export default {
         name: this.username,
       }
 
-      axios.post('http://127.0.0.1:8000/api/users', data)
+      axios.post('/api/users', data)
       .then(response => {
         if (response.status === 201) {
             this.$router.push('/');
