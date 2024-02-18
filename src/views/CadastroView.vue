@@ -29,6 +29,8 @@
 
 <script>
 import axios from "axios";
+import { logged } from "../helper.js";
+
 
 export default {
   data() {
@@ -38,6 +40,11 @@ export default {
       email: '',
      };
   },
+  
+  mounted(){
+    logged();
+  },
+
   methods: {
     cadastro(){
       var data = {

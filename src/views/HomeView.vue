@@ -33,6 +33,7 @@
 
 <script>
 import axios from "axios";
+import { logged } from "../helper.js";
 
 export default {
   data() {
@@ -43,6 +44,11 @@ export default {
       loginMode: 'user',
     };
   },
+
+  mounted(){
+    logged();
+  },
+  
   methods: {
     login() {
       var data = {
