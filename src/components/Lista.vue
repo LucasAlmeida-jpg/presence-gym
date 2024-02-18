@@ -1,6 +1,6 @@
 <template>
-    <div v-if="fileName == 'Historico'">
-        <div class="row mx-3" v-if="!show && !me.role == 'student'">
+    <div v-if="fileName == 'Professor' || fileName == 'Historico'">
+        <div class="row mx-3" v-if="!show && me.role == 'teacher'">
             <div class="">
                 <input type="text" placeholder="Nome do aluno" class="col-12 filters" v-model="name">
             </div>
@@ -28,7 +28,7 @@
                     </select>
                 </div>
                 <div class="mt-2 ms-auto">
-                    <button class="btn btn-primary" @click="submit()">Filtrar</button>
+                    <button class="btn btn-primary btn-outline-warning" @click="submit()">Filtrar</button>
                 </div>
             </div>
         </div>
@@ -123,6 +123,7 @@ export default {
         }
 
         if(fileName == 'Historico'){
+            console.log(1)
             this.submit();
             this.show = false;
         }
