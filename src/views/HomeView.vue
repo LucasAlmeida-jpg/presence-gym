@@ -46,7 +46,7 @@ export default {
   },
 
   mounted(){
-    logged();
+    // logged(); 
   },
   
   methods: {
