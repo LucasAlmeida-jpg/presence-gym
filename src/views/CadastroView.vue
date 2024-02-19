@@ -56,6 +56,7 @@ export default {
         email: this.email,
         password: this.password,
         name: this.username,
+        belt: this.belt
       }
 
       axios.post('/api/users', data)
