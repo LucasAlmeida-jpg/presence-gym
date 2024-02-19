@@ -10,9 +10,9 @@ function logged(){
 
     if(user){
         if(user.role == 'student'){
-            window.location.href = "/user" 
+            window.location.href = "/User" 
         } else{
-            window.location.href = "/professor" 
+            window.location.href = "/Professor" 
         }
     }
 
