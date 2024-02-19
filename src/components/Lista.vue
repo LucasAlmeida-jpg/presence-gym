@@ -158,7 +158,6 @@ export default {
                     if (indexToRemove !== -1) {
                         this.presences.splice(indexToRemove, 1);
                     }
-                    location.reload()
                 } else {
                 console.log(response.error);
                 }
