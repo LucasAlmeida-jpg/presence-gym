@@ -1,13 +1,8 @@
 <template>
     <nav class="px-5 py-3 d-flex align-items-center justify-content-between">
         <UserBar />
-    </nav>
-    <div class="d-flex justify-content-center mt-5">
-        <h1>{{ presences.length }} Pedidos Pendentes</h1>
-    </div>
-    
+    </nav>    
     <Lista /> 
-
     <Footer />
 </template>
 <script>
@@ -31,28 +26,28 @@ export default {
         };
     },
     mounted(){
-        this.getPresences();
-        const userJson = localStorage.getItem('me');
-        let user = JSON.parse(userJson);
-        this.me = user;
+        // this.getPresences();
+        // const userJson = localStorage.getItem('me');
+        // let user = JSON.parse(userJson);
+        // this.me = user;
     },
     methods: {
-        getPresences(){
-            axios.get('/api/pending', {
-                headers: { Authorization: "Bearer " + this.TOKEN },
-            })
-            .then(response => {
-                if (response.status === 200) {
-                    this.presences = response.data;
-                } else {
-                console.log(response.error);
-                }
-            });
-        },
+        // getPresences(){
+        //     axios.get('/api/pending', {
+        //         headers: { Authorization: "Bearer " + this.TOKEN },
+        //     })
+        //     .then(response => {
+        //         if (response.status === 200) {
+        //             this.presences = response.data;
+        //         } else {
+        //         console.log(response.error);
+        //         }
+        //     });
+        // },
 
-        formatDate(date){
-            return moment(date).format('DD/MM/YYYY');
-        }
+        // formatDate(date){
+        //     return moment(date).format('DD/MM/YYYY');
+        // }
 
     },
 };

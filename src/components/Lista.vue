@@ -32,6 +32,9 @@
                 </div>
             </div>
         </div>
+        <div v-if="show && me.role == 'teacher'" class="d-flex justify-content-center mt-5">
+            <h1>{{ presences.length }} Pedidos Pendentes</h1>
+        </div>
         <div class="mx-4 card-historic" style="margin-top:20px;">
             <table class="table table-dark table-hover table-rounded">
                 <thead>
@@ -123,7 +126,6 @@ export default {
         }
 
         if(fileName == 'Historico'){
-            console.log(1)
             this.submit();
             this.show = false;
         }
@@ -151,8 +153,12 @@ export default {
             .then(response => {
                 if (response.status === 200) {
                     alert('Presença confirmada com sucesso!')
-                    var presence = response.data;
-                    this.presences.splice(presence, 1);
+                    var indexToRemove = this.presences.findIndex(presence => presence.id == id);
+
+                    if (indexToRemove !== -1) {
+                        this.presences.splice(indexToRemove, 1);
+                    }
+                    location.reload()
                 } else {
                 console.log(response.error);
                 }
@@ -166,8 +172,10 @@ export default {
             .then(response => {
                 if (response.status === 200) {
                     alert('Presença recusada com sucesso!')
-                    var presence = response.data;
-                    this.presences.splice(presence, 1);
+                   var indexToRemove = this.presences.findIndex(presence => presence.id == id);
+                    if (indexToRemove !== -1) {
+                        this.presences.splice(indexToRemove, 1);
+                    }
                 } else {
                 console.log(response.error);
                 }
