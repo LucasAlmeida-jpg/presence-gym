@@ -9,7 +9,7 @@
         <h1 class=" mt-5 text-light">Regras de Gradução</h1>
         <div class="mt-5">
             <h5 class="text-light mt-3">Frequência Mínima</h5>
-            <p class="text-light mt-3">Para poder partcipar da graduação é preciso que o aluno tenha um número mínimo de frequência para estar apto a realizar o exame.</p><br>
+            <p class="text-light mt-3">Para poder participar da graduação é preciso que o aluno tenha um número mínimo de frequência para estar apto a realizar o exame.</p><br>
             <p class="text-light">A graduação será realizada respeitando as regras da IBJJF, consulte o tempo de cada faixa de acordo com a idade em: <a class="text-yellow" target="_blank" href="https://cbjj.com.br/graduation-system">IBJJF</a></p><br>
             <p class="text-light">    
                 <span class="text-light">Graus na faixa branca: 35 </span> Presenças<br>

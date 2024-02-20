@@ -42,6 +42,7 @@ export default {
       password: '',
       isLoggedIn: false,
       loginMode: 'user',
+      belt: ''
     };
   },
 
@@ -53,7 +54,8 @@ export default {
     login() {
       var data = {
         email: this.email,
-        password: this.password
+        password: this.password,
+        belt: this.belt
       };
 
       axios.post('/api/auth/login', data)
