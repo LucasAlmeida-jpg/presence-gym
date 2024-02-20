@@ -121,7 +121,7 @@ nav {
 
 footer {
   bottom: 0;
-  position: absolute !important;
+  position: fixed !important;
   margin: 0 !important;
   background-color: #242424;
   display: flex;
