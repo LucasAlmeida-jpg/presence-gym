@@ -18,7 +18,7 @@
 
        <div class="container" style="margin-top:80px;" v-if="data?.pending?.length == 0">
             <div class="row d-flex justify-content-center">
-                <div class="col-md-6 col-sm-12">
+                <div class="col-md-6 col-sm-12 d-flex justify-content-center">
                     <div class="btn btn-success py-3 w-100">
                         <div class="text-center" @click="requestPresence()">Marcar Presença</div>
                     </div>
@@ -28,7 +28,7 @@
 
         <div class="container" style="margin-top:80px;" v-if="data?.pending?.status == 'pending'">
             <div class="row d-flex justify-content-center">
-                <div class="col-md-6 col-sm-12">
+                <div class="col-md-6 col-sm-12 d-flex justify-content-center">
                     <div class="btn btn-warning py-3 w-100">
                         <div class="text-center">Aguardando Confirmação</div>
                     </div>

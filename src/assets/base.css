@@ -177,3 +177,11 @@ footer {
 .text-yellow{
   color: rgb(255, 230, 0);
 }
+
+.btn-success {
+  max-width: 160px !important;
+}
+
+.btn-warning{
+  max-width: 230px !important;
+}
