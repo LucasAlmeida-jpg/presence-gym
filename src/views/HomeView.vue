@@ -4,7 +4,7 @@
   </div>
   <main class="login-container">
     <div v-if="!isLoggedIn" class="login-form">
-      <h2>Login --</h2>
+      <h2>Login ---</h2>
       <!-- <div class="d-flex justify-content-center mb-3">
         <button @click="setMode('user')" :class="{ active: loginMode === 'user' }">Email</button>
         <button @click="setMode('professor')" :class="{ active: loginMode === 'professor' }" class="ms-3">Professor</button>
