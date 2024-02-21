@@ -81,7 +81,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-button {
+.btn-yellow {
   background-color: rgb(255, 230, 0) !important;
   color: black !important;
 }

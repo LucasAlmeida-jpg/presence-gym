@@ -28,7 +28,7 @@
                     </select>
                 </div>
                 <div class="mt-2 ms-auto">
-                    <button class="btn btn-primary btn-outline-warning" @click="submit()">Filtrar</button>
+                    <button class="btn btn-yellow btn-outline-warning" @click="submit()">Filtrar</button>
                 </div>
             </div>
         </div>
@@ -39,6 +39,7 @@
             <table class="table table-dark table-hover table-rounded">
                 <thead>
                     <tr>
+                    <th></th>
                     <th scope="col" v-if="me.role == 'student'">Status</th>
                     <th scope="col" v-else>Nome</th>
 
@@ -49,6 +50,12 @@
                 </thead>
                 <tbody>
                     <tr v-for="(presence, index) in presences" :key="index">
+                        <th>
+                            <div :key="presence.id" class="checkbox-custom d-flex mt-2">
+                                <input type="checkbox" :id="presence.id"  class="checkbox-custom" @change="updateList(presence.id)"><label :for="presence.id"></label>
+                                <p class="p-form ps-4"></p>
+                            </div>
+                        </th>
                         <th scope="row" v-if="me.role == 'student'">
                             <div v-if="presence?.status == 'confirmed'">
                                 <FontAwesomeIcon icon="circle-check"  class="ms-1 me-2 text-success"/>
@@ -68,6 +75,10 @@
                     </tr>
                 </tbody>
             </table>
+            <div class="d-flex justify-content-between max" v-if="list.length">
+                <button class="btn btn-warning" @click="confirm()">Confirmar {{ list.length }}</button>
+                <button class="btn btn-danger" @click="refuse()">Recusar {{ list.length }}</button>
+            </div>
         </div>
     </div>
     <div v-else-if="fileName == 'Alunos'">
@@ -111,7 +122,8 @@ export default {
             presences: [],
             users: [],
             show: true,
-            fileName: ''
+            fileName: '',
+            list: []
         };
     },
     mounted(){
@@ -132,13 +144,23 @@ export default {
     },
 
     methods: {
+
+        updateList(id){
+            var index = this.list.indexOf(id);
+
+            if (index === -1) {
+                this.list.push(id);
+            } else {
+                this.list.splice(index, 1);
+            }   
+        },
+
         submit(){
             axios.get('/api/historic?month='+this.month+'&name='+this.name+'&year='+this.year, {
                 headers: { Authorization: "Bearer " + this.TOKEN },
             })
             .then(response => {
                 if (response.status === 200) {
-                    console.log(response, 'response')
                     this.presences = response.data;
                 } else {
                 console.log(response.error);
@@ -147,17 +169,23 @@ export default {
         },
 
         confirm(id){
-            axios.get('/api/confirm/'+id, {
+            if(this.list && this.list.length != 0){
+                var data = {
+                    ids: this.list
+                }
+            }else{
+                var data = {
+                    ids: id
+                }
+            }   
+            
+            axios.post('/api/confirm', data, {
                 headers: { Authorization: "Bearer " + this.TOKEN },
             })
             .then(response => {
                 if (response.status === 200) {
                     alert('Presença confirmada com sucesso!')
-                    var indexToRemove = this.presences.findIndex(presence => presence.id == id);
-
-                    if (indexToRemove !== -1) {
-                        this.presences.splice(indexToRemove, 1);
-                    }
+                    location.reload();
                 } else {
                 console.log(response.error);
                 }
@@ -165,16 +193,22 @@ export default {
         },
 
         refuse(id){
-            axios.get('/api/refuse/'+ id, {
+            if(this.list && this.list.length != 0){
+                var data = {
+                    ids: this.list
+                }
+            }else{
+                var data = {
+                    ids: id
+                }
+            } 
+            axios.post('/api/refuse', data, {
                 headers: { Authorization: "Bearer " + this.TOKEN },
             })
             .then(response => {
                 if (response.status === 200) {
                     alert('Presença recusada com sucesso!')
-                   var indexToRemove = this.presences.findIndex(presence => presence.id == id);
-                    if (indexToRemove !== -1) {
-                        this.presences.splice(indexToRemove, 1);
-                    }
+                    location.reload();
                 } else {
                 console.log(response.error);
                 }
@@ -220,3 +254,61 @@ export default {
 <script setup>
     import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 </script>
+
+<style scoped>
+.max{
+    max-width: 220px;
+}
+.checkbox-custom {
+    display: inline-block;
+    vertical-align: middle;
+    cursor: pointer;
+}
+
+.checkbox-custom input {
+    position: absolute;
+    top: 20px;
+    display: none;
+}
+
+.checkbox-custom label {
+    position: relative;
+    display: inline-block;
+    margin-bottom: 7px;
+}
+
+.checkbox-custom label::before {
+    content: "";
+    display: inline-block;
+    vertical-align: middle;
+    height: 18px;
+    width: 18px;
+    background: rgb(255, 221, 51);
+    border: 1px solid rgb(255, 221, 51);
+    transition: all 0.2s ease;
+    position: absolute;
+    top: 50%;
+    transform: translate(0, -50%);
+}
+
+.checkbox-custom label::after {
+    content: "\2714";
+    position: absolute;
+    top: 50%;
+    left: 0.55em;
+    transform: translate(-50%, -50%);
+    font-size: 1.1em;
+    color: #000; /**cor do icone */
+    opacity: 0;
+    transition: all 0.2s ease;
+}
+
+.checkbox-custom input:checked+label::before {
+    background: rgb(255, 221, 51);
+    border-color: #000;
+}
+
+.checkbox-custom input:checked+label::after {
+    opacity: 1;
+}
+</style>

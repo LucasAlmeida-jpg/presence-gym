@@ -26,7 +26,7 @@
           <label for="floatingPassword">Senha</label>
         </div>
 
-        <button type="submit">Cadastrar</button>
+        <button class="btn-yellow" type="submit">Cadastrar</button>
       </form>
     </div>
   </main>

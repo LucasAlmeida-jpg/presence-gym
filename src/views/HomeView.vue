@@ -21,7 +21,7 @@
           <label for="floatingPassword">Senha</label>
         </div>
   
-        <button type="submit">Entrar</button>
+        <button class="btn-yellow" type="submit">Entrar</button>
 
         <div class="mt-3">
           <router-link class="text-yellow" to="/cadastro" style="text-decoration:none"><small>Clique para se cadastrar</small></router-link>
