@@ -96,7 +96,7 @@ export default {
             if (response.status === 201) {
                 this.data.pending = response.data;
             } else {
-                alert('Voce já marcou sua presenca na data de hoje.')
+                alert(response.data)
             }
         });
     },
