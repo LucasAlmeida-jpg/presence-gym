@@ -87,9 +87,9 @@ body {
 }
 
 .form-control {
-  background-color: var(--color-background) !important;
+  background-color: #fff !important;
   border: none !important;
-  color: white !important;
+  color: #000 !important;
 }
 
 nav {
