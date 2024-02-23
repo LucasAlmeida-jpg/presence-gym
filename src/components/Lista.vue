@@ -39,7 +39,7 @@
             <table class="table table-dark table-hover table-rounded">
                 <thead>
                     <tr>
-                    <th></th>
+                    <th v-if="me.role == 'teacher'"></th>
                     <th scope="col" v-if="me.role == 'student'">Status</th>
                     <th scope="col" v-else>Nome</th>
 
@@ -50,7 +50,7 @@
                 </thead>
                 <tbody>
                     <tr v-for="(presence, index) in presences" :key="index">
-                        <th>
+                        <th v-if="me.role == 'teacher'">
                             <div :key="presence.id" class="checkbox-custom d-flex mt-2">
                                 <input type="checkbox" :id="presence.id"  class="checkbox-custom" @change="updateList(presence.id)"><label :for="presence.id"></label>
                                 <p class="p-form ps-4"></p>
@@ -66,7 +66,7 @@
                         </th>
                         <th scope="row" v-else>{{presence?.user?.name}} <span style="font-size:8px; color:grey">({{ presence?.user?.belt }})</span></th>
 
-                        <td>{{ formatDate(presence?.created_at) }}</td>
+                        <td>{{ formatDate(presence?.created_at) }} ({{ dayOfWeek(presence.created_at) }})</td>
                         <td v-if="show">
                             <FontAwesomeIcon icon="circle-check"  class="me-2 text-success" @click="confirm(presence.id)"/>
                             <FontAwesomeIcon icon="circle-xmark" class="text-danger" @click="refuse(presence.id)"/>
@@ -123,7 +123,7 @@ export default {
             users: [],
             show: true,
             fileName: '',
-            list: []
+            list: [],
         };
     },
     mounted(){
@@ -144,6 +144,20 @@ export default {
     },
 
     methods: {
+        dayOfWeek(val){
+            var diasDaSemana = [
+                "Domingo", "Segunda-feira", "Terça-feira", "Quarta-feira", "Quinta-feira", "Sexta-feira", "Sábado"
+            ];
+
+            if(!val) return '';
+
+            var data = new Date(val);
+            var diaDaSemanaIndice = data.getDay();
+            var diaDaSemanaNome = diasDaSemana[diaDaSemanaIndice];
+
+            this.dayWeek = diaDaSemanaNome;
+            return diaDaSemanaNome;
+        },
 
         updateList(id){
             var index = this.list.indexOf(id);
@@ -235,9 +249,7 @@ export default {
             })
             .then(response => {
                 if (response.status === 200) {
-                    console.log(response.data, "rrr")
                     this.users = response.data;
-                    console.log(this.users, 'users')
                 } else {
                 console.log(response.error);
                 }
