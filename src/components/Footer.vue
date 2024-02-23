@@ -1,4 +1,7 @@
 <template>
+    <div class="mb-5 ms-2 fixed-bottom">
+        <DataHora />
+    </div>
     <footer class="d-flex py-3 px-3 justify-content-between">
         <div class="">
             <router-link v-if="me.role == 'student' " to="/User" class="link">Inicio <span class="ps-1"><FontAwesomeIcon icon="house" /></span></router-link>
@@ -21,8 +24,13 @@
 
 import { getUser } from "../helper.js";
 import axios from "axios";
+import DataHora from '../components/DataHora.vue'
 
 export default {
+
+    components:{
+      DataHora
+    },
     data() {
         return {
             me: {},
