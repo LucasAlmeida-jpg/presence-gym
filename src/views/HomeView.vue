@@ -20,8 +20,8 @@
           <input type="password" v-model="password" class="form-control" id="floatingPassword" placeholder=" ">
           <label for="floatingPassword">Senha</label>
         </div>
-  
-        <button class="btn-yellow" type="submit">Entrar</button>
+
+        <button class="btn-yellow" type="submit">{{ text }}</button>
 
         <div class="mt-3">
           <router-link class="text-yellow" to="/cadastro" style="text-decoration:none"><small>Clique para se cadastrar</small></router-link>
@@ -42,7 +42,8 @@ export default {
       password: '',
       isLoggedIn: false,
       loginMode: 'user',
-      belt: ''
+      belt: '',
+      text: "Entrar",
     };
   },
 
@@ -52,17 +53,18 @@ export default {
   
   methods: {
     login() {
+      this.text = "Entrando...";
       var data = {
         email: this.email,
         password: this.password,
-        belt: this.belt
+        belt: this.belt,
       };
 
       axios.post('/api/auth/login', data)
       .then(response => {
-        if (response.status === 200) {
-          const userJson = JSON.stringify(response.data.user);
 
+        if (!response.data.error) {
+          const userJson = JSON.stringify(response.data.user);
           localStorage.setItem("token", response.data.access_token);
           localStorage.setItem("role", response.data.user.role);
           localStorage.setItem("me", userJson);
@@ -73,9 +75,12 @@ export default {
             this.$router.push('/Professor');
           }
         } else {
-          console.log(response.error);
+          alert('Email e/ou senha incorretos')
         }
       })
+
+      this.text = "Entrar";
+
     },
   },
 };
@@ -143,4 +148,64 @@ export default {
   border-radius: 4px;
   cursor: pointer;
 }
+
+
+
+
+.lds-ellipsis {
+  display: inline-block;
+  position: relative;
+  width: 60px;
+  height: 60px;
+}
+.lds-ellipsis div {
+  position: absolute;
+  top: 33px;
+  width: 13px;
+  height: 13px;
+  border-radius: 50%;
+  background: rgb(255, 221, 51);
+  animation-timing-function: cubic-bezier(0, 1, 1, 0);
+}
+.lds-ellipsis div:nth-child(1) {
+  left: 8px;
+  animation: lds-ellipsis1 0.6s infinite;
+}
+.lds-ellipsis div:nth-child(2) {
+  left: 8px;
+  animation: lds-ellipsis2 0.6s infinite;
+}
+.lds-ellipsis div:nth-child(3) {
+  left: 32px;
+  animation: lds-ellipsis2 0.6s infinite;
+}
+.lds-ellipsis div:nth-child(4) {
+  left: 56px;
+  animation: lds-ellipsis3 0.6s infinite;
+}
+@keyframes lds-ellipsis1 {
+  0% {
+    transform: scale(0);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+@keyframes lds-ellipsis3 {
+  0% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(0);
+  }
+}
+@keyframes lds-ellipsis2 {
+  0% {
+    transform: translate(0, 0);
+  }
+  100% {
+    transform: translate(24px, 0);
+  }
+}
+
 </style>
