@@ -60,8 +60,11 @@
                             <div v-if="presence?.status == 'confirmed'">
                                 <FontAwesomeIcon icon="circle-check"  class="ms-1 me-2 text-success"/>
                             </div>
-                            <div v-else>
+                            <div v-else-if="presence?.status == 'refused'">
                                 <FontAwesomeIcon icon="circle-xmark"  class="ms-1 me-2 text-danger"/>
+                            </div>
+                            <div v-else>
+                                <FontAwesomeIcon icon="clock"  class="ms-1 me-2 text-warning"/>
                             </div>
                         </th>
                         <th scope="row" v-else>{{presence?.user?.name}} <span style="font-size:8px; color:grey">({{ presence?.user?.belt }})</span></th>
