@@ -49,21 +49,16 @@
                 </div>
             </div>
         </article>
-
-        <Footer />
-        
     </section>
 </template>
 <script>
 
 import axios from "axios";
 import UserBar from '../components/UserBar.vue'
-import Footer from '../components/Footer.vue'
 
 export default {
     components:{
         UserBar,
-        Footer
     },
 
     data() {

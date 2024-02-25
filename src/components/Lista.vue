@@ -1,111 +1,113 @@
 <template>
-    <div v-if="fileName == 'Professor' || fileName == 'Historico'">
-        <div class="row mx-3" v-if="!show && me.role == 'teacher'">
-            <div class="">
-                <input type="text" placeholder="Nome do aluno" class="col-12 filters" v-model="name">
-            </div>
-            <div class="d-flex">
-                <div class="mt-2 me-2">
-                    <select class="filters" v-model="month">
-                    <option value="all">Todos os meses</option>
-                    <option value="1">Janeiro</option>
-                    <option value="2">Fevereiro</option>
-                    <option value="3">Março</option>
-                    <option value="4">Abril</option>
-                    <option value="5">Maio</option>
-                    <option value="6">Junho</option>
-                    <option value="7">Julho</option>
-                    <option value="8">Agosto</option>
-                    <option value="9">Setembro</option>
-                    <option value="10">Outubro</option>
-                    <option value="11">Novembro</option>
-                    <option value="12">Dezembro</option>
-                </select>
+    <div class="bottom">
+            <div v-if="fileName == 'Professor' || fileName == 'Historico'">
+            <div class="row mx-3" v-if="!show && me.role == 'teacher'">
+                <div class="">
+                    <input type="text" placeholder="Nome do aluno" class="col-12 filters" v-model="name">
                 </div>
-                <div class="mt-2 me-2">
-                    <select class="filters" v-model="year">
-                        <option value="2024">2024</option>
+                <div class="d-flex">
+                    <div class="mt-2 me-2">
+                        <select class="filters" v-model="month">
+                        <option value="all">Todos os meses</option>
+                        <option value="1">Janeiro</option>
+                        <option value="2">Fevereiro</option>
+                        <option value="3">Março</option>
+                        <option value="4">Abril</option>
+                        <option value="5">Maio</option>
+                        <option value="6">Junho</option>
+                        <option value="7">Julho</option>
+                        <option value="8">Agosto</option>
+                        <option value="9">Setembro</option>
+                        <option value="10">Outubro</option>
+                        <option value="11">Novembro</option>
+                        <option value="12">Dezembro</option>
                     </select>
+                    </div>
+                    <div class="mt-2 me-2">
+                        <select class="filters" v-model="year">
+                            <option value="2024">2024</option>
+                        </select>
+                    </div>
+                    <div class="mt-2 ms-auto">
+                        <button class="btn btn-yellow btn-outline-warning" @click="submit()">Filtrar</button>
+                    </div>
                 </div>
-                <div class="mt-2 ms-auto">
-                    <button class="btn btn-yellow btn-outline-warning" @click="submit()">Filtrar</button>
+            </div>
+            <div v-if="show && me.role == 'teacher'" class="d-flex justify-content-center mt-5">
+                <h1>{{ presences.length }} Pedidos Pendentes</h1>
+            </div>
+            <div class="mx-4 card-historic" style="margin-top:20px;">
+                <table class="table table-dark table-hover table-rounded">
+                    <thead>
+                        <tr>
+                        <th v-if="me.role == 'teacher' && fileName != 'Historico'"></th>
+                        <th scope="col" v-if="me.role == 'student'">Status</th>
+                        <th scope="col" v-else>Nome</th>
+
+                        <th scope="col">Data</th>
+                        <th scope="col" v-if="show">Ação</th>
+                        <th scope="col"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr v-for="(presence, index) in presences" :key="index">
+                            <th v-if="me.role == 'teacher' && fileName != 'Historico'">
+                                <div :key="presence.id" class="checkbox-custom d-flex mt-2">
+                                    <input type="checkbox" :id="presence.id"  class="checkbox-custom" @change="updateList(presence.id)"><label :for="presence.id"></label>
+                                    <p class="p-form ps-4"></p>
+                                </div>
+                            </th>
+                            <th scope="row" v-if="me.role == 'student'">
+                                <div v-if="presence?.status == 'confirmed'">
+                                    <FontAwesomeIcon icon="circle-check"  class="ms-1 me-2 text-success"/>
+                                </div>
+                                <div v-else-if="presence?.status == 'refused'">
+                                    <FontAwesomeIcon icon="circle-xmark"  class="ms-1 me-2 text-danger"/>
+                                </div>
+                                <div v-else>
+                                    <FontAwesomeIcon icon="clock"  class="ms-1 me-2 text-warning"/>
+                                </div>
+                            </th>
+                            <th scope="row" v-else>{{presence?.user?.name}} <span style="font-size:8px; color:grey">({{ presence?.user?.belt }})</span></th>
+
+                            <td>{{ formatDate(presence?.created_at) }} ({{ dayOfWeek(presence.created_at) }})</td>
+                            <td v-if="show">
+                                <FontAwesomeIcon icon="circle-check"  class="me-2 text-success" @click="confirm(presence.id)"/>
+                                <FontAwesomeIcon icon="circle-xmark" class="text-danger" @click="refuse(presence.id)"/>
+                            </td>
+                            <td></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="d-flex justify-content-between max" v-if="list.length">
+                    <button class="btn btn-warning" @click="confirm()">Confirmar {{ list.length }}</button>
+                    <button class="btn btn-danger" @click="refuse()">Recusar {{ list.length }}</button>
                 </div>
             </div>
         </div>
-        <div v-if="show && me.role == 'teacher'" class="d-flex justify-content-center mt-5">
-            <h1>{{ presences.length }} Pedidos Pendentes</h1>
-        </div>
-        <div class="mx-4 card-historic" style="margin-top:20px;">
-            <table class="table table-dark table-hover table-rounded">
-                <thead>
-                    <tr>
-                    <th v-if="me.role == 'teacher'"></th>
-                    <th scope="col" v-if="me.role == 'student'">Status</th>
-                    <th scope="col" v-else>Nome</th>
+        <div v-else-if="fileName == 'Alunos'">
+            <div class="mx-4 card-historic" style="margin-top:20px;">
+                <table class="table table-dark table-hover table-rounded">
+                    <thead>
+                        <tr>
+                        <th scope="col" v-if="me.role == 'student'">Status</th>
+                        <th scope="col" v-else>Nome</th>
 
-                    <th scope="col">Data</th>
-                    <th scope="col" v-if="show">Ação</th>
-                    <th scope="col"></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr v-for="(presence, index) in presences" :key="index">
-                        <th v-if="me.role == 'teacher'">
-                            <div :key="presence.id" class="checkbox-custom d-flex mt-2">
-                                <input type="checkbox" :id="presence.id"  class="checkbox-custom" @change="updateList(presence.id)"><label :for="presence.id"></label>
-                                <p class="p-form ps-4"></p>
-                            </div>
-                        </th>
-                        <th scope="row" v-if="me.role == 'student'">
-                            <div v-if="presence?.status == 'confirmed'">
-                                <FontAwesomeIcon icon="circle-check"  class="ms-1 me-2 text-success"/>
-                            </div>
-                            <div v-else-if="presence?.status == 'refused'">
-                                <FontAwesomeIcon icon="circle-xmark"  class="ms-1 me-2 text-danger"/>
-                            </div>
-                            <div v-else>
-                                <FontAwesomeIcon icon="clock"  class="ms-1 me-2 text-warning"/>
-                            </div>
-                        </th>
-                        <th scope="row" v-else>{{presence?.user?.name}} <span style="font-size:8px; color:grey">({{ presence?.user?.belt }})</span></th>
-
-                        <td>{{ formatDate(presence?.created_at) }} ({{ dayOfWeek(presence.created_at) }})</td>
-                        <td v-if="show">
-                            <FontAwesomeIcon icon="circle-check"  class="me-2 text-success" @click="confirm(presence.id)"/>
-                            <FontAwesomeIcon icon="circle-xmark" class="text-danger" @click="refuse(presence.id)"/>
-                        </td>
-                        <td></td>
-                    </tr>
-                </tbody>
-            </table>
-            <div class="d-flex justify-content-between max" v-if="list.length">
-                <button class="btn btn-warning" @click="confirm()">Confirmar {{ list.length }}</button>
-                <button class="btn btn-danger" @click="refuse()">Recusar {{ list.length }}</button>
+                        <th scope="col">Faixa</th>
+                        <th scope="col">Presenças</th>
+                        <th scope="col"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr v-for="(user, index) in users" :key="index">
+                            <th scope="row" >{{user?.name}}</th>
+                            <td>{{ user?.belt }}</td>
+                            <td>{{ user?.presences?.length }}</td>
+                            <td></td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
-        </div>
-    </div>
-    <div v-else-if="fileName == 'Alunos'">
-        <div class="mx-4 card-historic" style="margin-top:20px;">
-            <table class="table table-dark table-hover table-rounded">
-                <thead>
-                    <tr>
-                    <th scope="col" v-if="me.role == 'student'">Status</th>
-                    <th scope="col" v-else>Nome</th>
-
-                    <th scope="col">Faixa</th>
-                    <th scope="col">Presenças</th>
-                    <th scope="col"></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr v-for="(user, index) in users" :key="index">
-                        <th scope="row" >{{user?.name}}</th>
-                        <td>{{ user?.belt }}</td>
-                        <td>{{ user?.presences?.length }}</td>
-                        <td></td>
-                    </tr>
-                </tbody>
-            </table>
         </div>
     </div>
 </template>
@@ -192,7 +194,7 @@ export default {
                 }
             }else{
                 var data = {
-                    ids: id
+                    ids: [id]
                 }
             }   
             
@@ -216,7 +218,7 @@ export default {
                 }
             }else{
                 var data = {
-                    ids: id
+                    ids: [id]
                 }
             } 
             axios.post('/api/refuse', data, {
@@ -271,6 +273,9 @@ export default {
 </script>
 
 <style scoped>
+.bottom{
+    margin-bottom: 100px;
+}
 .max{
     max-width: 220px;
 }

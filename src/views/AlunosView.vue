@@ -7,17 +7,14 @@
         <h5 class="ms-4">Alunos</h5>
         <Lista />
   </div>
-
-    <Footer />
 </template>
 <script>
 import UserBar from '../components/UserBar.vue'
 import Lista from '../components/Lista.vue'
-import Footer from '../components/Footer.vue'
 
 export default {
     components:{
-        UserBar, Lista, Footer
+        UserBar, Lista
     },
   data() {
     return {
