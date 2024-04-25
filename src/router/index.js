@@ -6,6 +6,7 @@ import CadastroView from '../views/CadastroView.vue'
 import HistoricoView from '../views/HistoricoView.vue'; 
 import GraduacaoView from '../views/GraduacaoView.vue'; 
 import AlunosView from '../views/AlunosView.vue'; 
+import ConfigView from '../views/Alunos/ConfigView.vue'; 
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -44,6 +45,11 @@ const router = createRouter({
       path: '/Alunos',
       name: 'Alunos',
       component: AlunosView
+    },
+    {
+      path: '/Configuracoes',
+      name: 'Configuracoes',
+      component: ConfigView
     }
    ]
 })
