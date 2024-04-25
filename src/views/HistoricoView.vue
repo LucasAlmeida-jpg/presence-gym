@@ -7,15 +7,19 @@
         <h5 class="ms-4">Histórico</h5>
         <Lista />
   </div>
+   <footer>
+      <Footer></Footer>
+    </footer>
 
 </template>
 <script>
 import UserBar from '../components/UserBar.vue'
 import Lista from '../components/Lista.vue'
+import Footer from '../components/Footer.vue'
 
 export default {
     components:{
-        UserBar, Lista
+        UserBar, Lista, Footer
     },
   data() {
     return {

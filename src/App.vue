@@ -3,7 +3,7 @@
         <router-view></router-view>
        </body>
        <!-- <DataHora></DataHora> -->
-       <Footer class="mt-5"></Footer>
+       <!-- <Footer class="mt-5"></Footer> -->
 </template>
 
 <script>
@@ -18,12 +18,10 @@ export default {
 
   data() {
     return {
-      
     }
   },
 
   mounted() {
-
   },
 
   methods: {

@@ -8,12 +8,13 @@
 <script>
 
 import UserBar from '../components/UserBar.vue';
-import Lista from '../components/Lista.vue'
+import Lista from '../components/Lista.vue';
+import Footer from '../components/Footer.vue'
 
 
 export default {
     components:{
-        UserBar, Lista
+        UserBar, Lista, Footer
     },
     data() {
         return {

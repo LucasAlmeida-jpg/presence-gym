@@ -86,6 +86,7 @@
             </div>
         </div>
         <div v-else-if="fileName == 'Alunos'">
+            <h5 class="ms-4">{{ users?.length }} Alunos</h5>
             <div class="mx-4 card-historic" style="margin-top:20px;">
                 <table class="table table-dark table-hover table-rounded">
                     <thead>
