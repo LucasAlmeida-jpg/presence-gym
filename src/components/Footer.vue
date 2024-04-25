@@ -9,6 +9,10 @@
             <router-link to="/Historico" class="link">Histórico <span class="ps-1"><FontAwesomeIcon icon="clock" /></span></router-link>
         </div>
         <div class="">
+            <router-link  v-if="me.role == 'student'" to="/Configuracoes" class="link">Perfil <span class="ps-1"><FontAwesomeIcon icon="gear" /></span></router-link>
+            <!-- <router-link v-else to="/Alunos" class="link">Alunos <span class="ps-1"><FontAwesomeIcon icon="users" /></span></router-link> -->
+        </div>
+        <div class="">
             <router-link  v-if="me.role == 'student'" to="/Graduacao" class="link">Graduação <span class="ps-1"><FontAwesomeIcon icon="up-long" /></span></router-link>
             <router-link v-else to="/Alunos" class="link">Alunos <span class="ps-1"><FontAwesomeIcon icon="users" /></span></router-link>
         </div>
@@ -56,3 +60,15 @@ export default {
 <script setup>
     import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 </script>
+
+<style scoped>
+footer {
+  bottom: 0;
+  position: fixed !important;
+  margin: 0 !important;
+  background-color: #242424;
+  display: flex;
+  align-items: center;
+  min-width: 100% !important;
+}
+</style>

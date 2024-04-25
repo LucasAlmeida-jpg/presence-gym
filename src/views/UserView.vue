@@ -36,18 +36,18 @@
         </div> -->
 
         <article class="row article px-5 py-3 text-center" style="margin-top:100px;">
-            <div class="col-md-6 mb-3">
+            <div class="col-md-12 mb-3">
                 <div>
-                    <h3>Presença </h3>
+                    <h3>Presenças </h3>
                     <h4>{{data.countPresence}}</h4>
                 </div>
             </div>
-            <div class="col-md-6">
+            <!-- <div class="col-md-6">
                 <div>
                     <h3>Faltas</h3>
                     <h4>{{ data.countFouls }}</h4>
                 </div>
-            </div>
+            </div> -->
         </article>
     </section>
     <footer>
@@ -74,8 +74,6 @@ export default {
             refused: [],
             email: '',
             password: '',
-            isLoggedIn: false,
-            loginMode: 'user',
         };
     },
 

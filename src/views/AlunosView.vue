@@ -6,6 +6,7 @@
     <div class="mt-3">
       <Lista />
     </div>
+    <Footer></Footer>
 </template>
 <script>
 import UserBar from '../components/UserBar.vue'
